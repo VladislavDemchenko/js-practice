@@ -186,10 +186,321 @@ link.setAttribute('name', 'name'); //ім'я атрибута, нове знач
 link.removeAttribute('name');
 
 
-console.log(link.dataset.price) // стандарт зберігання додаткових данних - data-*; lower camel case
-console.log(link.tagName) // повертає тег в uppercase
+// console.log(link.dataset.price) // стандарт зберігання додаткових данних - data-*; lower camel case
+// console.log(link.tagName) // повертає тег в uppercase
 
 
 link.hidden = false; //скриває весь об'єкт
+
+let str = "dsfsdf"
+let num = Number(str);
+// console.log(Number.isNaN(num));
+
+let user={};
+ user.name = "Kolya"
+ user.age = 45
+
+for (let userKey in user) {
+    // console.log(userKey + " : " + user[userKey]);
+
+}
+////////////////////////////Function
+const arrayFunction = function() {
+    const arr = Array.from(arguments);
+    // console.log(arr);
+}
+arrayFunction(4,5,6,4,"dsfdf,", true)
+
+const arrayFunction2 = function(...args) {
+    // console.log(args);
+}
+arrayFunction2(4,5,6,4,"dsfdf,", true)
+
+function ask(question, yes, no) {
+    // if(confirm(question)) {
+        yes();
+    // }else{
+        no()
+    // }
+}
+function showOk(){
+    console.log("yes")
+}
+function showCancel() {
+    console.log("canceled")
+}
+// ask("how do you feel?", showOk, showCancel);
+
+////////////////////////////////////////////callback
+
+
+const hello1 = (name) =>{
+    console.log(`hello ${name}`)
+}
+
+const searchName2 = (callback) => {
+    const name = "serega"
+    callback(name)
+}
+// searchName2(hello1)
+
+///////////////////////////замикання
+
+
+function createUrl(domain){
+    return function (url){
+        return 'https://${url}.${domain}';
+    }
+}
+
+const comUrl = createUrl("com");
+// console.log(comUrl("google"));
+
+
+
+//////////////////////////this
+
+
+function sayHello(){
+    console.log("sayHello ", this)
+}
+
+
+const user1 = {
+    name: "John",
+    age: 23,
+    hello: sayHello,
+};
+// user1.hello()
+
+function abc(){
+    console.log(this)
+}
+// document.querySelector('#PHello').onclick = abc;
+
+
+///////////////////////////////////////////
+
+
+function changeColor(){
+    this.style.color = 'blue';
+}
+const users = document.querySelectorAll('.DivHuman p');
+users.forEach(user => {
+        user.onclick = changeColor;
+})
+
+//////////////////////////////////// function methods: bind, call, apply
+//////////////////////////////////// bind - creating new object for some methods with some parameters
+
+
+function hello2(){
+    console.log(this)
+}
+
+const user3 = {
+    name: 'John',
+    age: 23,
+    sayHelloWindows: hello2.bind(window),
+    info: function (city) {
+        console.log(`Name is ${this.name}`)
+        console.log(`Age is ${this.age}`)
+        console.log(`City is ${city}`)
+    },
+};
+// user3.info()
+
+const Anna = {
+    name: 'Anna',
+    age: 25,
+};
+
+const Bogdan = {
+    name: 'Bogdan',
+    age: 25,
+    city: "Geirop"
+}
+// user3.info.bind(Anna, "Ternopil")();
+// user3.info.bind(Bogdan)(Bogdan.city);
+
+
+/////////////////////////////////////////// call - calling some methods with some parameters
+
+
+const userInfo = {
+    name: 'Vova',
+    age: 54,
+    logInfo: function(job){
+        console.group(`info`)
+        console.log(`Name is : ${this.name}`)
+        console.log(`Age is : ${this.age}`)
+        console.log(`Job is : ${job}`)
+        console.groupEnd();
+    }
+};
+
+const Ivanov = {
+    name: 'Ivanov',
+    age: 64,
+}
+
+// userInfo.logInfo.call(Ivanov, "developer");
+
+
+/////////////////////////////////////////apply - calling some methods with some parameters in array
+
+
+
+const showUserInfo = {
+    name: "Lera",
+    age: 43,
+    logInfo(job, city){
+        console.group(`info`)
+        console.log(`Name is : ${this.name}`)
+        console.log(`Age is : ${this.age}`)
+        console.log(`Job is : ${job}`)
+        console.log(`City is : ${city}`)
+        console.groupEnd();
+    }
+}
+
+const Sahsa = {
+    name: 'Sahsa',
+    age: 45,
+}
+
+// showUserInfo.logInfo.apply(Sahsa, ['gemeDev', "NewYork"]);
+
+
+
+const cart = {
+    showItems(){
+        console.log("In collection: ", this.items)
+    },
+
+};
+
+const woman = {
+    items: ["Skirt, T-short"]
+}
+const men = {
+    items: ["Trousers, T-shirt"]
+
+}
+const kid = {
+    items: ["Shorts, Socks"]
+}
+
+
+document
+    .querySelector('#woman')
+    .addEventListener('click', cart.showItems.bind(woman));
+document
+    .querySelector('#kid')
+    .addEventListener('click', cart.showItems.bind(kid));
+document
+    .querySelector('#men')
+    .addEventListener('click', cart.showItems.bind(men));
+
+
+////////////////////////////classes and objects
+
+
+class Bank {
+    static type = "Private";
+    constructor(options){
+        this.summ = options.summ;
+        this.month = options.month;
+        this.p = options.p;
+    }
+
+    credit(){
+        return "Privat";
+    }
+}
+
+const userBank = new Bank({
+    summ: 3000,
+    month: 5,
+    p: 5,
+})
+
+class NewBank extends Bank{
+    constructor(options) {
+        super(options);
+        this.card = options.card;
+    }
+    credit() {
+        return text + "Aval";
+    }
+}
+const aval = new NewBank({
+    summ: 5000,
+    month: 2,
+    p: 1,
+    card: "credit"
+});
+
+// console.log(aval.credit());
+
+///////////////getter setter
+
+class User{
+    constructor(props) {
+        this.name = props;
+    }
+    firstName = "";
+    _lastName = "";
+    _age = "";
+    _city = "";
+
+
+    set name(newName) {
+        this._firstName = newName[0];
+        this._lastName = newName[1];
+
+    }
+
+    get name() {
+        return  `${this.firstName} ${this._lastName}`;
+    }
+}
+
+
+
+
+const Manager = function (name, sales){
+    this.name = name;
+    this.sales = sales;
+
+}
+
+
+Manager.prototype. sale = function (){
+
+
+    this.sales++;
+}
+const ivan = new Manager("vanya", 10)
+
+
+
+class CoffeMachine {
+    _water = 0;
+    #waterLimit = 500;
+
+    constructor(power) {
+        this.power = power;
+    }
+
+    set waterAdd(value){
+        if(value < 0){
+            value = 0;
+        }
+        this._water += value;
+    }
+
+
+}
 
 
